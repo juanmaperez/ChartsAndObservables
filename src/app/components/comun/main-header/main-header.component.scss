@@ -1,0 +1,16 @@
+:host{
+    background:#ff9696;
+    min-height:20px;
+    padding:20px;
+    box-sizing: border-box;
+    width:100%;
+    display: block;
+    p {
+        letter-spacing: 3;
+        color:#fff;
+        font-weight: 200;
+        span{
+            font-weight: 700;
+        }
+    }
+}

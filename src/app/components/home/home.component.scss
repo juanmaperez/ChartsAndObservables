@@ -1,0 +1,29 @@
+:host{
+    display:flex;
+    justify-content: center;
+    width:100%;
+}
+.container{
+    width:80%;
+    margin:0px auto;
+    display: block;
+    .info-container {
+        display:flex;
+        flex-direction: row;
+        justify-content: space-between;
+        main-table{
+            border:1px solid blue;
+            width:50%;
+            box-sizing: border-box;
+            padding:10px;
+        }
+
+        chart{
+            border:1px solid red;
+            width:50%;
+            box-sizing: border-box;
+            padding:10px;
+            
+        }
+    }
+}

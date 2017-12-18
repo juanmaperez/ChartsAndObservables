@@ -1,0 +1,38 @@
+:host{
+    width:100%;
+    display:block;
+    margin:20px 0px;
+    
+}
+
+form{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+
+    select{
+        margin:5px;
+        width:15%;
+        padding:12px;
+        box-sizing:border-box;
+        display: block;
+        -webkit-appearance:none;
+        border:1px solid #999;
+        border-radius: 0px; 
+    }
+
+    button{
+        margin:5px;        
+        width:15%;
+        padding:12px;
+        box-sizing:border-box;
+        display: block;
+        -webkit-appearance:none;
+        border-radius: 0px;  
+        font-weight: bolder;
+        color:#fff;
+        background:#FF9297;
+        font-size: 14px;
+        font-weight: 300;
+    }
+}
