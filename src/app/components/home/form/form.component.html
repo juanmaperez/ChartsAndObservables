@@ -1,6 +1,23 @@
-<form>
-  <select name=""></select>
-  <select name=""></select>
-  <select name=""></select>
+<form #myForm="ngForm">
+  <select name="continent" [(ngModel)]="filters.continent">
+    <option value="All">All</option>
+    <option value="EU">Europe</option>
+    <option value="AS">Asia</option>
+    <option value="NA">North America</option>
+    <option value="AF">Afric</option>  
+    <option value="AN">Antartic</option> 
+    <option value="SA">South America</option>    
+    <option value="OC">Oceania</option>   
+  </select>
+  <select name="metric" [(ngModel)]="filters.metric">   
+    <option value="None">None</option>
+    <option value="areaInSqKm">Area</option>
+    <option value="population">Population</option></select>
+  <select name="quantity" [(ngModel)]="filters.quantity">
+    <option value="5">5</option>
+    <option value="10">10</option>
+    <option value="15">15</option>
+    <option value="20">20</option>    
+  </select>
   <button type="submit">Go!</button>
 </form>

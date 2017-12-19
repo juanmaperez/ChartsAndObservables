@@ -1,3 +1,4 @@
+import { ApiService } from './services/api.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router'
@@ -9,6 +10,8 @@ import { HomeComponent } from './components/home/home.component';
 import { FormComponent } from './components/home/form/form.component';
 import { TableComponent } from './components/home/table/table.component';
 import { ChartComponent } from './components/home/chart/chart.component';
+import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 
 
 const routes: Routes = [
@@ -29,8 +32,11 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes),
+    FormsModule,
+    HttpModule,
+    
   ],
-  providers: [],
+  providers: [ApiService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
