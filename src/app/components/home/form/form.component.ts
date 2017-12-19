@@ -33,9 +33,13 @@ export class FormComponent implements OnInit {
       subscribe((filters)=>{
         this.filters = filters;
       })
-      
+
   }
 
+  updateFilters(){
+    this.api.updateFilters(this.filters)
+    console.log(this.filters)
+  }
 
 
 }

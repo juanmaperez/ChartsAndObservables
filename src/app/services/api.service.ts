@@ -12,7 +12,7 @@ export class ApiService {
 
   private filters = new BehaviorSubject <Object>({
     continent : "All",
-    metric: "All",
+    metric: "None",
     quantity: 5,
   }); 
   public filtersObservable = this.filters.asObservable();
@@ -29,6 +29,10 @@ export class ApiService {
         this.data = res.json();
         return this.data.geonames
       })
+  }
+
+  updateFilters(filters){
+    this.filters.next(filters)
   }
 
 }

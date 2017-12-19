@@ -1,3 +1,24 @@
-<p>
-  table works!
-</p>
+<div class="table">
+  <div class="table-header">
+    <div>
+      Country Name
+    </div>
+    <div>
+      Country Continent
+    </div>
+    <div>
+      Country Filter
+    </div>
+  </div>
+  <div *ngFor="let country of values" class="table-line">
+    <div>
+       {{country.countryName}}
+    </div>
+    <div>
+        {{country.continentName}}
+    </div>
+    <div>
+      Country Filter
+    </div>  
+  </div>
+</div>

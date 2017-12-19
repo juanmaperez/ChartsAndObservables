@@ -32,10 +32,12 @@ export class HomeComponent implements OnInit {
         this.getCountries()    
         
       })
-      
+
   }
 
   getCountries(){
+    this.data = [];
+    
     this.api.getCountries()
     .filter((data)=>{      
       if(this.filters.continent !== "All"){

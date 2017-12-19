@@ -1,0 +1,32 @@
+div.table{
+    border:2px solid #666;
+
+    .table-header{
+        padding:10px 5px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        background:#666;
+        
+        div{
+            width:33%;
+            border:0px;
+            text-align: center;
+            color:#fff;
+        }
+
+    }
+    .table-line{
+        padding:10px 5px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        
+        div{
+            width:33%;
+            border:0px;
+            text-align: center;
+        }
+
+    }
+}

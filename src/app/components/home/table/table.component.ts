@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'main-table',
@@ -7,9 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TableComponent implements OnInit {
 
+  @Input('values') values: Array<Object>; 
+
   constructor() { }
 
   ngOnInit() {
+    console.log(this.values)
   }
 
 }
