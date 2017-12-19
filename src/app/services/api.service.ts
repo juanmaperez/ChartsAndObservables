@@ -17,7 +17,7 @@ export class ApiService {
   }); 
   public filtersObservable = this.filters.asObservable();
 
-  
+
   url = "http://api.geonames.org/countryInfoJSON?formatted=true&username=hydrane";  
 
   constructor(private http : Http) { }
@@ -28,8 +28,7 @@ export class ApiService {
       .map((res)=>{
         this.data = res.json();
         return this.data.geonames
-        // return res._body
-      }).take(5)
+      })
   }
 
 }

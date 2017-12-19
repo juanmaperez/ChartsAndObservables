@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Renderer2, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Renderer2, AfterViewInit, Input } from '@angular/core';
 declare var require: any;
 const Highcharts = require('highcharts/highcharts.src');
 import { Highcharts } from 'highcharts/adapters/standalone-framework.src';
@@ -65,6 +65,8 @@ export class ChartComponent implements OnInit, AfterViewInit {
     }]
   }
 
+  @Input('values')
+  values: Array<Object>;
 
   @ViewChild('chart') chart: ElementRef
   constructor(

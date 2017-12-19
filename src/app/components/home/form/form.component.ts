@@ -24,34 +24,18 @@ export class FormComponent implements OnInit {
   filters : any;
 
   public filtersSubscription = new Subscription;
+  
   constructor(private api : ApiService) { }
 
   ngOnInit() {
 
-    this.getCountries();
-
-
     this.filtersSubscription = this.api.filtersObservable.
       subscribe((filters)=>{
         this.filters = filters;
-        console.log("filter",this.filters)
       })
+      
   }
 
-  getCountries(){
-    this.api.getCountries()
-    .filter((data)=>{
-      if(this.filters.continent !== "All"){
-        return data.continent == this.filters.continent;        
-      }else{
-        return data;
-      }
-    })
-    .switchMap(data => Observable.from(data))
-    .take(this.filters.quantity)
-    .subscribe((data)=>{
-      this.data.push(data);
-    });
-  }
+
 
 }
