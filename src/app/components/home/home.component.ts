@@ -8,6 +8,7 @@ import 'rxjs/add/operator/filter';
 
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/observable/from';
+import 'rxjs/add/operator/mergeMap'
 
 @Component({
   selector: 'home',
@@ -16,6 +17,8 @@ import 'rxjs/add/observable/from';
 })
 export class HomeComponent implements OnInit {
 
+
+  direction: String = "dsc"
   data: Array<Object> = [];
   filters: any;
 
@@ -36,21 +39,59 @@ export class HomeComponent implements OnInit {
   }
 
   getCountries(){
-    this.data = [];
     
+    this.data = [];
+
     this.api.getCountries()
-    .filter((data)=>{      
+    .map((data)=>data.geonames.filter((country)=>{
       if(this.filters.continent !== "All"){
-        return data.continent == this.filters.continent;        
+        console.log("continentes",country.continent)
+        return country.continent == this.filters.continent
       }else{
-        return data;
+        return country.continent
       }
     })
-    .switchMap(data => Observable.from(data))
+    )
+    .map((data)=>{
+      if(this.filters.metric == "population"){
+        return this.sortByPopulation(data, this.direction)
+      }else if(this.filters.metric == "areaInSqKm"){
+        return this.sortByArea(data, this.direction)        
+      }
+      return data;
+    })
+    .mergeMap(data => Observable.from(data))
     .take(parseInt(this.filters.quantity))
     .subscribe((data)=>{
       this.data.push(data);
+      console.log("esto es this data",this.data)
     });
   }
 
+
+  sortByPopulation(data, direction){
+    if(direction =="asc"){
+      data.sort((a, b)=>{
+        return a["population"] - b["population"]
+       })
+    } else{
+      data.sort((a, b)=>{
+        return b["population"] - a["population"]
+       })
+    }
+    return data
+  }
+
+  sortByArea(data, direction){
+    if(direction =="asc"){
+      data.sort((a, b)=>{
+        return a["areaInSqKm"] - b["areaInSqKm"]
+       })
+    } else{
+      data.sort((a, b)=>{
+        return b["areaInSqKm"] - a["areaInSqKm"]
+       })
+    }
+    return data
+  }
 }

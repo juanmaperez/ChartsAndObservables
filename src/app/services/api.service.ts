@@ -25,10 +25,7 @@ export class ApiService {
 
   getCountries(){
     return this.http.get(this.url)
-      .map((res)=>{
-        this.data = res.json();
-        return this.data.geonames
-      })
+      .map(res=>res.json());
   }
 
   updateFilters(filters){
