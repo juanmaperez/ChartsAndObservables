@@ -1,5 +1,5 @@
 <form #myForm="ngForm">
-  <select name="continent" [(ngModel)]="filters.continent" (change)="updateFilters()">
+  <select name="continent" [(ngModel)]="this.api.filters.continent" (change)="updateFilters()">
     <option value="All">All</option>
     <option value="EU">Europe</option>
     <option value="AS">Asia</option>
@@ -9,11 +9,11 @@
     <option value="SA">South America</option>    
     <option value="OC">Oceania</option>   
   </select>
-  <select name="metric" [(ngModel)]="filters.metric" (change)="updateFilters()">   
+  <select name="metric" [(ngModel)]="this.api.filters.metric" (change)="updateFilters()">   
     <option value="None">None</option>
     <option value="areaInSqKm">Area</option>
     <option value="population">Population</option></select>
-  <select name="quantity" [(ngModel)]="filters.quantity" (change)="updateFilters()">
+  <select name="quantity" [(ngModel)]="this.api.filters.quantity" (change)="updateFilters()">
     <option value="5">5</option>
     <option value="10">10</option>
     <option value="15">15</option>

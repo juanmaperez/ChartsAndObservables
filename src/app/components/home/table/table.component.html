@@ -18,7 +18,10 @@
         {{country.continentName}}
     </div>
     <div>
-      Country Filter
-    </div>  
+      <p *ngIf="filters.metric == 'areaInSqKm'">{{country.areaInSqKm}} SqKms</p>
+      <p *ngIf="filters.metric == 'population'">{{country.population}} people</p>
+      <p *ngIf="filters.metric == 'None'">Alphabetical Order</p>
+  
+        </div>  
   </div>
 </div>

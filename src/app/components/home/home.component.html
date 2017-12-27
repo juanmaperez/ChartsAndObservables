@@ -1,9 +1,9 @@
 <div class="container">
   <div class="form-container">
-    <main-form></main-form>
+    <main-form (changeFilters)="getCountries()"></main-form>
   </div>
   <div class="info-container">
-    <main-table #values [values]="data"></main-table>
-    <chart #values [values]="data"></chart>
+    <main-table [values]="data"></main-table>
+    <chart #values [values]="[chartValues]"></chart>
   </div>
 </div>

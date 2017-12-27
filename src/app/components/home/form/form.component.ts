@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormsModule }from '@angular/forms';
 import { ApiService } from './../../../services/api.service';
 import 'rxjs/add/operator/take';
@@ -23,22 +23,18 @@ export class FormComponent implements OnInit {
   data : Array<Object> = [];
   filters : any;
 
-  public filtersSubscription = new Subscription;
+  @Output() changeFilters = new EventEmitter<void>()
   
   constructor(private api : ApiService) { }
 
   ngOnInit() {
-
-    this.filtersSubscription = this.api.filtersObservable.
-      subscribe((filters)=>{
-        this.filters = filters;
-      })
-
+    this.filters = this.api.filters
   }
 
   updateFilters(){
     this.api.updateFilters(this.filters)
-    console.log(this.filters)
+    this.changeFilters.emit()
+    // console.log(this.filters)
   }
 
 

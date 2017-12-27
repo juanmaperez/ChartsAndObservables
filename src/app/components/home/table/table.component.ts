@@ -1,3 +1,4 @@
+import { ApiService } from './../../../services/api.service';
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
@@ -7,12 +8,16 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class TableComponent implements OnInit {
 
-  @Input('values') values: Array<Object>; 
+ filters
+  
+  @Input()
+  values : any;
 
-  constructor() { }
+  constructor(private api : ApiService) { }
 
   ngOnInit() {
-    console.log(this.values)
+    this.filters =this.api.filters;
+    
   }
 
 }

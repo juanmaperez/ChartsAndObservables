@@ -1,7 +1,9 @@
+import { Observable } from 'rxjs/Observable';
 import { Component, OnInit, ViewChild, ElementRef, Renderer2, AfterViewInit, Input } from '@angular/core';
 declare var require: any;
 const Highcharts = require('highcharts/highcharts.src');
 import { Highcharts } from 'highcharts/adapters/standalone-framework.src';
+import { ApiService } from '../../../services/api.service';
 
 
 
@@ -11,73 +13,29 @@ import { Highcharts } from 'highcharts/adapters/standalone-framework.src';
   styleUrls: ['./chart.component.scss']
 })
 export class ChartComponent implements OnInit, AfterViewInit {
+  
+  
+  opts: Object = {};
 
-  opts = {
-    chart: {
-      plotBackgroundColor: null,
-      plotBorderWidth: null,
-      plotShadow: false,
-      type: 'pie'
-    },
-    title: {
-        text: 'Browser market shares January, 2015 to May, 2015'
-    },
-    tooltip: {
-        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-    },
-    plotOptions: {
-        pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            dataLabels: {
-                enabled: true,
-                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-                style: {
-                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-                }
-            }
-        }
-    },
-    series: [{
-        name: 'Brands',
-        colorByPoint: true,
-        data: [{
-            name: 'IE',
-            y: 56.33
-        }, {
-            name: 'Chrome',
-            y: 24.03,
-            sliced: true,
-            selected: true
-        }, {
-            name: 'Firefox',
-            y: 10.38
-        }, {
-            name: 'Safari',
-            y: 4.77
-        }, {
-            name: 'Opera',
-            y: 0.91
-        }, {
-            name: 'Other',
-            y: 0.2
-        }]
-    }]
-  }
-
-  @Input('values')
+  @Input()
   values: Array<Object>;
+
 
   @ViewChild('chart') chart: ElementRef
   constructor(
-      private renderer : Renderer2, 
+      private renderer : Renderer2,
+      private api : ApiService, 
+      
       ) { }
 
   ngOnInit() {
+     
   }
 
   ngAfterViewInit(){
+    this.generateChartOptions();
     this.createChart()
+
   }
 
   createChart(){
@@ -87,6 +45,26 @@ export class ChartComponent implements OnInit, AfterViewInit {
   }
   
 
+
+  generateChartOptions(){
+    console.log(this.values["0"][0])
+    this.opts = {
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        title: {
+            text: `Countries in by ${this.api.filters.metric}`
+        },
+        series: [{
+        name: 'Total',
+        colorByPoint: true,
+        data: this.values
+        }]
+    }; 
+  }
 
 
 
