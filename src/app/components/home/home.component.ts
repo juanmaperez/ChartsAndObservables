@@ -1,5 +1,6 @@
+import { ChartComponent } from './chart/chart.component';
 import { ApiService } from './../../services/api.service';
-import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -25,21 +26,16 @@ export class HomeComponent implements OnInit {
 
   getCountriesSubscription: Subscription = null;
 
+  @ViewChild(ChartComponent) myChart: ChartComponent;
+
   constructor(private api : ApiService) { }
 
   ngOnInit() {
     this.getCountries()
-    
-    this.getCountriesSubscription = this.api.dataObservable
-    .subscribe((data)=>{
-      this.data = data;
-      // console.log("chartValues",this.chartValues)
-    })
-    
+      
   }
 
   getCountries(){
-    this.chartValues = []    
 
     this.api.getCountries()
 
@@ -48,20 +44,10 @@ export class HomeComponent implements OnInit {
       this.data = data;
       // console.log("chartValues",this.chartValues)
     })    
-    
+        
   }
 
-  generateChartValues(data, metric){
-    if(metric == "population"){
-        this.chartValues.push({ name: data.countryName, y: data.population });
-    }
-    if(metric == "areaInSqKm"){
-        this.chartValues.push({ name: data.countryName, y: data.areaInSqKm });
-    } 
-    if(metric == "None"){      
-        this.chartValues.push({ name: data.countryName, y: 1});
-    }
-  }
+
 
   
 }
