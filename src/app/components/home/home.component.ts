@@ -28,23 +28,31 @@ export class HomeComponent implements OnInit {
 
   @ViewChild(ChartComponent) myChart: ChartComponent;
 
-  constructor(private api : ApiService) { }
+  constructor(private api : ApiService) { 
 
-  ngOnInit() {
+
+  }
+
+  ngOnInit() { 
+    this.getCountriesSubscription = this.api.valuesObservable
+    .subscribe((data)=>{
+      this.data = data;
+      // console.log("chartValues",this.chartValues)
+    })  
+
     this.getCountries()
       
   }
 
   getCountries(){
-
     this.api.getCountries()
+      .subscribe((data)=>{
+        this.data = data
+    })     
+  }
 
-    this.getCountriesSubscription = this.api.dataObservable
-    .subscribe((data)=>{
-      this.data = data;
-      // console.log("chartValues",this.chartValues)
-    })    
-        
+  updateValues(){
+    this.api.refilterValues()  
   }
 
 

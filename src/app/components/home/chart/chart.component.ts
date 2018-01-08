@@ -44,7 +44,7 @@ export class ChartComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(){
 
-    this.getCountriesSubscription = this.api.dataObservable
+    this.getCountriesSubscription = this.api.valuesObservable
     .subscribe((data)=>{
         if(data){
             data.map((element)=>{
@@ -63,15 +63,15 @@ export class ChartComponent implements OnInit, AfterViewInit {
   }
 
   createChart(){
-    let previousChild = document.getElementsByClassName('mychart')
-    console.log(previousChild.length)
-    if(previousChild.length !== 0 ){
-        let child = this.renderer.selectRootElement('.mychart');
+    // let previousChild = document.getElementsByClassName('mychart')
+    // console.log(previousChild.length)
+    // if(previousChild.length !== 0 ){
+    //     let child = this.renderer.selectRootElement('.mychart');
         
-        this.element = this.renderer.selectRootElement('.chartplace');
-        console.log(child)
-        this.element.removeChild(this.element, child)
-    }
+    //     this.element = this.renderer.selectRootElement('.chartplace');
+    //     console.log(child)
+    //     this.element.removeChild(this.element, child)
+    // }
 
     this.container = this.renderer.createElement("div");
     this.renderer.addClass(this.container, "mychart");
