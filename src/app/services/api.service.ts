@@ -1,8 +1,14 @@
+import { mergeMap } from 'rxjs/operator/mergeMap';
 import { Injectable } from '@angular/core';
 import { HttpModule, Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/take';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/toArray';
+
+
 import "rxjs/add/observable/of";
+import { Response } from '@angular/http';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subject } from 'rxjs/Subject';
@@ -38,9 +44,9 @@ export class ApiService {
       .map((res)=>{
         this.data = res.json().geonames;
         console.log(this.data)
-        return res.json()
+        return res.json().geonames
       })
-      .map((data)=>data.geonames.filter((country)=>{
+      .map((data)=>data.filter((country)=>{
           if(this.filters.continent !== "All"){
             return country.continent == this.filters.continent
           }else{
@@ -66,60 +72,30 @@ export class ApiService {
   refilterValues(){
     let countries = []
     Observable.from(this.data)
-    .mergeMap(data=>Observable.of(data))
-    .filter((country)=>{
-      console.log("este es el filtro",this.filters.continent);
+    .map((country)=>{
       if(this.filters.continent == "All"){
-        console.log("filtering with All", country)
-        return country.continent;
+        return country;
       }else{
-        console.log("filtering without all", country)
-        return country.continent === this.filters.continent
+        if(country["continent"] == this.filters.continent){
+          return country
+        }
       }
     })
+    .toArray()
+    .map((data)=>{ 
+      if(this.filters.metric == "population"){
+        return this.sortByPopulation(data, this.direction).slice(0, this.filters.quantity)
+      }else if(this.filters.metric == "areaInSqKm"){
+        return this.sortByArea(data, this.direction).slice(0, this.filters.quantity)        
+      }
+        return data
+    })
     .subscribe((data)=>{
-      countries.push(data)
-      console.log("final data", data)
-      console.log(countries)
-      return countries
+      this.setValues(data.slice(0, this.filters.quantity))
+
     })
 
-    this.values.next(countries.slice(0, this.filters.quantity))
-    // .filter((country)=>{
-    //       console.log("Entra Aquí");
-    //       if(this.filters.continent !== "All"){
-    //         console.log("filtering", country.continent)
-    //         return country.continent == this.filters.continent
-    //       }else{
-    //         console.log("filtering", country.continent)
-    //         return country.continent
-    //       }
-    // })
-
-    // data.array.map((element)=>{
-    //   console.log("maping",data)
-    //   element.filter((country)=>{
-        
-    //     console.log("Entra Aquí");
-    //     if(this.filters.continent !== "All"){
-    //       console.log("filtering", country.continent)
-    //       return country.continent == this.filters.continent
-    //     }else{
-    //       console.log("filtering", country.continent)
-    //       return country.continent
-    //     }
-    //   })
-    // })
-    // )
-    // .map((data)=>{        
-    //   if(this.filters.metric == "population"){
-    //     this.setValues(data.slice(0, this.filters.quantity))
-    //   }else if(this.filters.metric == "areaInSqKm"){
-    //     this.setValues(data.slice(0, this.filters.quantity))
-    //   }
-    //   this.setValues(data.slice(0, this.filters.quantity))
-    // })
-    console.log(this.values)
+   
   }
   
   sortByPopulation(data, direction){
