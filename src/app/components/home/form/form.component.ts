@@ -1,11 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormsModule }from '@angular/forms';
 import { ApiService } from './../../../services/api.service';
-import 'rxjs/add/operator/take';
-import 'rxjs/add/operator/filter';
-
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/observable/from';
 
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';

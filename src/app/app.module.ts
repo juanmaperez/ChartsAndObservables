@@ -2,6 +2,8 @@ import { ApiService } from './services/api.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router'
+import { ChartModule } from 'angular2-highcharts';
+declare var require: any;
 
 import { AppComponent } from './app.component';
 import { MainHeaderComponent } from './components/comun/main-header/main-header.component';
@@ -32,9 +34,9 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes),
+    ChartModule.forRoot(require('highcharts')),
     FormsModule,
     HttpModule,
-    
   ],
   providers: [ApiService],
   bootstrap: [AppComponent]

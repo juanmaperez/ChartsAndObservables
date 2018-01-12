@@ -22,8 +22,11 @@ export class HomeComponent implements OnInit {
   data: any;
   filters: any;
   chartValues : any = new Array();
-  example : Array<Number> = [2, 5, 6]
+  options : Object;
 
+
+  example : Array<Number> = [2, 5, 6]
+  decrease : boolean;
   getCountriesSubscription: Subscription = null;
 
   @ViewChild(ChartComponent) myChart: ChartComponent;
@@ -34,6 +37,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() { 
+    console.log(this.api.decreaseObservable)
     this.getCountriesSubscription = this.api.valuesObservable
     .subscribe((data)=>{
       this.data = data;
@@ -53,6 +57,10 @@ export class HomeComponent implements OnInit {
 
   updateValues(){
     this.api.refilterValues()  
+  }
+
+  changeDirection(){
+    this.api.changeDirection();
   }
 
 

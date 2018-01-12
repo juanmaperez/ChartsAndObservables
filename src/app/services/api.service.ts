@@ -11,6 +11,8 @@ import "rxjs/add/observable/of";
 import { Response } from '@angular/http';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
+
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 
@@ -21,10 +23,11 @@ export class ApiService {
   public data: any;
 
 
-  private values = new BehaviorSubject<any>(null);
+  private values = new ReplaySubject<any>(null);
   public valuesObservable = this.values.asObservable();
   
-  direction: String = "dsc";
+  private decrease = new BehaviorSubject<boolean>(true);
+  public decreaseObservable = this.decrease.asObservable()
   
 
   public filters: any = {
@@ -43,7 +46,7 @@ export class ApiService {
     return this.http.get(this.url)
       .map((res)=>{
         this.data = res.json().geonames;
-        console.log(this.data)
+
         return res.json().geonames
       })
       .map((data)=>data.filter((country)=>{
@@ -57,10 +60,10 @@ export class ApiService {
       .map((data)=>{        
         if(this.filters.metric == "population"){
           this.setValues(data.slice(0, this.filters.quantity))
-          return this.sortByPopulation(data, this.direction).slice(0, this.filters.quantity)
+          return this.sortByPopulation(data, this.decrease.getValue()).slice(0, this.filters.quantity)
         }else if(this.filters.metric == "areaInSqKm"){
           this.setValues(data.slice(0, this.filters.quantity))
-          return this.sortByArea(data, this.direction).slice(0, this.filters.quantity)        
+          return this.sortByArea(data, this.decrease.getValue()).slice(0, this.filters.quantity)        
         }
 
         this.setValues(data.slice(0, this.filters.quantity))
@@ -84,9 +87,9 @@ export class ApiService {
     .toArray()
     .map((data)=>{ 
       if(this.filters.metric == "population"){
-        return this.sortByPopulation(data, this.direction).slice(0, this.filters.quantity)
+        return this.sortByPopulation(data, this.decrease.getValue())
       }else if(this.filters.metric == "areaInSqKm"){
-        return this.sortByArea(data, this.direction).slice(0, this.filters.quantity)        
+        return this.sortByArea(data, this.decrease.getValue())        
       }
         return data
     })
@@ -98,8 +101,8 @@ export class ApiService {
    
   }
   
-  sortByPopulation(data, direction){
-    if(direction =="asc"){
+  sortByPopulation(data, decrease){
+    if(!decrease){
       data.sort((a, b)=>{
         return a["population"] - b["population"]
        })
@@ -111,8 +114,8 @@ export class ApiService {
     return data
   }
 
-  sortByArea(data, direction){
-    if(direction =="asc"){
+  sortByArea(data, decrease){
+    if(!decrease){
       data.sort((a, b)=>{
         return a["areaInSqKm"] - b["areaInSqKm"]
        })
@@ -130,6 +133,12 @@ export class ApiService {
   
   setValues(data){
     this.values.next(data)
+  }
+
+  changeDirection(){
+
+    this.decrease.next(!this.decrease.getValue());
+    this.refilterValues();
   }
 
 }

@@ -7,6 +7,18 @@
     width:80%;
     margin:0px auto;
     display: block;
+
+    .changedirection{
+        border:1px solid #ff9696;
+        color: #ff9696;
+        padding: 10px;
+        margin-left:10px
+    }
+    .changedirection:hover{
+        background: #ff9696;
+        color:#fff;
+    }
+
     .info-container {
         display:flex;
         flex-direction: row;

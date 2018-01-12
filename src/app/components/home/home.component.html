@@ -2,8 +2,13 @@
   <div class="form-container">
     <main-form (changeFilters)="updateValues()"></main-form>
   </div>
+
+  <button class="changedirection" (click)="changeDirection()"><ng-container *ngIf="(api.decreaseObservable | async) == false"><i class="fa fa-arrow-up">ASC</i></ng-container><ng-container *ngIf="(api.decreaseObservable | async) == true">DSC<i class="fa fa-arrow-up"></i></ng-container></button>
+
   <div class="info-container">
     <main-table [values]="data"></main-table>
-    <chart #values [values]="[chartValues]"></chart>
+    <mychart #values [values]="[chartValues]"></mychart>
   </div>
+
+  
 </div>
