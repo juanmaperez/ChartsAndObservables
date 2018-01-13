@@ -80,7 +80,7 @@ export class ChartComponent implements OnInit, AfterViewInit {
                 type: 'pie'
             },
             title: {
-                text: `Countries in ${this.api.filters.metric} by ${this.api.filters.metric}`
+                text: `Countries in ${this.api.filters.continent} by ${this.api.filters.metric}`
             },
             series: [{
             name: 'Total',
@@ -91,6 +91,7 @@ export class ChartComponent implements OnInit, AfterViewInit {
     }
 
     generateChartValues(data, metric){
+        console.log(this.api.filters)
         if(metric == "population"){
            return { name: data.countryName, y: parseInt(data.population) };
         }

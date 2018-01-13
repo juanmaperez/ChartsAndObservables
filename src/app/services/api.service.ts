@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { HttpModule, Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/take';
+import 'rxjs/add/operator/filter';
+
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/toArray';
 
@@ -59,13 +61,16 @@ export class ApiService {
       )
       .map((data)=>{        
         if(this.filters.metric == "population"){
+          console.log(data.length)
+
           this.setValues(data.slice(0, this.filters.quantity))
           return this.sortByPopulation(data, this.decrease.getValue()).slice(0, this.filters.quantity)
         }else if(this.filters.metric == "areaInSqKm"){
+          console.log(data.length)
           this.setValues(data.slice(0, this.filters.quantity))
           return this.sortByArea(data, this.decrease.getValue()).slice(0, this.filters.quantity)        
         }
-
+        console.log(data.length)
         this.setValues(data.slice(0, this.filters.quantity))
         return data.slice(0, this.filters.quantity);
       })
@@ -75,17 +80,10 @@ export class ApiService {
   refilterValues(){
     let countries = []
     Observable.from(this.data)
-    .map((country)=>{
-      if(this.filters.continent == "All"){
-        return country;
-      }else{
-        if(country["continent"] == this.filters.continent){
-          return country
-        }
-      }
-    })
+    .filter((data)=> this.filterCountriesByContinent(data, this.filters.continent))
     .toArray()
     .map((data)=>{ 
+
       if(this.filters.metric == "population"){
         return this.sortByPopulation(data, this.decrease.getValue())
       }else if(this.filters.metric == "areaInSqKm"){
@@ -97,10 +95,21 @@ export class ApiService {
       this.setValues(data.slice(0, this.filters.quantity))
 
     })
-
    
   }
   
+  filterCountriesByContinent(country, continent){
+    if(continent == "All"){
+      return country;
+    }else{
+      if(country["continent"] == continent){
+        return country
+      }
+    }
+  }
+ 
+
+
   sortByPopulation(data, decrease){
     if(!decrease){
       data.sort((a, b)=>{
