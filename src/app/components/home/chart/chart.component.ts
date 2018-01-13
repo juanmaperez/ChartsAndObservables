@@ -43,7 +43,7 @@ export class ChartComponent implements OnInit, AfterViewInit {
             })
 
             if(this.chart){
-                console.log(this.chart)
+                // console.log(this.chart)
                 // remove existing series. Set param to false so chart is not redrawn
                 this.chart.series[0].remove(false);
                 // add new series. Set second param to true so chart is redrawn with new series
@@ -91,7 +91,7 @@ export class ChartComponent implements OnInit, AfterViewInit {
     }
 
     generateChartValues(data, metric){
-        console.log(this.api.filters)
+        // console.log(this.api.filters)
         if(metric == "population"){
            return { name: data.countryName, y: parseInt(data.population) };
         }

@@ -48,33 +48,9 @@ export class ApiService {
     return this.http.get(this.url)
       .map((res)=>{
         this.data = res.json().geonames;
-
-        return res.json().geonames
-      })
-      .map((data)=>data.filter((country)=>{
-          if(this.filters.continent !== "All"){
-            return country.continent == this.filters.continent
-          }else{
-            return country.continent
-          }
-        })
-      )
-      .map((data)=>{        
-        if(this.filters.metric == "population"){
-          console.log(data.length)
-
-          this.setValues(data.slice(0, this.filters.quantity))
-          return this.sortByPopulation(data, this.decrease.getValue()).slice(0, this.filters.quantity)
-        }else if(this.filters.metric == "areaInSqKm"){
-          console.log(data.length)
-          this.setValues(data.slice(0, this.filters.quantity))
-          return this.sortByArea(data, this.decrease.getValue()).slice(0, this.filters.quantity)        
-        }
-        console.log(data.length)
-        this.setValues(data.slice(0, this.filters.quantity))
-        return data.slice(0, this.filters.quantity);
-      })
-      
+        this.setValues(res.json().geonames.slice(0, this.filters.quantity))
+        return res.json().geonames.slice(0, this.filters.quantity)
+      })    
   }
  
   refilterValues(){

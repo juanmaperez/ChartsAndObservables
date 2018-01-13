@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() { 
-    console.log(this.api.decreaseObservable)
+    // console.log(this.api.decreaseObservable)
     this.getCountriesSubscription = this.api.valuesObservable
     .subscribe((data)=>{
       this.data = data;
