@@ -4,6 +4,7 @@ import { Component, OnInit, ViewChild, ElementRef, Renderer2, AfterViewInit, Inp
 import { ApiService } from '../../../services/api.service';
 import { Subscription } from 'rxjs/Subscription';
 
+import { trigger,state,style,transition,animate,keyframes } from '@angular/animations';
 
 
 

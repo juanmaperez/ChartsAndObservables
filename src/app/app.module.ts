@@ -14,6 +14,7 @@ import { TableComponent } from './components/home/table/table.component';
 import { ChartComponent } from './components/home/chart/chart.component';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 const routes: Routes = [
@@ -37,6 +38,7 @@ const routes: Routes = [
     ChartModule.forRoot(require('highcharts')),
     FormsModule,
     HttpModule,
+    BrowserAnimationsModule
   ],
   providers: [ApiService],
   bootstrap: [AppComponent]
